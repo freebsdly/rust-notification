@@ -1,5 +1,6 @@
 mod conf;
 mod devops;
+mod db;
 
 use crate::conf::Settings;
 use crate::devops::DevOpsApiClient;

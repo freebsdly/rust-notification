@@ -17,8 +17,19 @@ pub struct DevOpsOptions {
 #[allow(unused)]
 #[derive(Debug, Deserialize, Clone, Getters)]
 #[get = "pub"]
+pub struct DataBaseOptions {
+    url: String,
+    pool_size: u32,
+    username: Option<String>,
+    password: Option<String>,
+}
+
+#[allow(unused)]
+#[derive(Debug, Deserialize, Clone, Getters)]
+#[get = "pub"]
 pub struct Settings {
     devops: DevOpsOptions,
+    database: DataBaseOptions,
 }
 
 impl Settings {

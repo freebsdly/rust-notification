@@ -1,5 +1,5 @@
 use crate::conf::DevOpsOptions;
-use anyhow::{Context, anyhow};
+use anyhow::{anyhow, Context};
 use getset::Getters;
 use serde::Deserialize;
 
@@ -160,7 +160,6 @@ impl DevOpsApiClient {
             .await
             .context("get project pipelines failed")?;
 
-        // 只有当状态码为200时才继续转json
         if response.status().is_success() {
             let body = response
                 .json::<DevOpsApiBody<PageRecords<PipelineInfo>>>()

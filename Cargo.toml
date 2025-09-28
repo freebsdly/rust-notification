@@ -10,7 +10,7 @@ tokio = { version = "1", features = ["full"] }
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 clap = "4"
-
+sea-orm = { version = "1.1.16", features = ["sqlx-sqlite", "macros", "runtime-tokio-native-tls"] }
 axum = { version = "0", features = ["ws"] }
 tokio-stream = "0"
 chrono = { version = "0", features = ["serde"] }
