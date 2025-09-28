@@ -29,7 +29,7 @@ async fn main() -> Result<(), anyhow::Error> {
     pretty_env_logger::init();
 
     log::info!("配置加载成功");
-
+    db::Repository::new();
     let devops_options = GLOBAL_CONFIG
         .read()
         .map_err(|e| anyhow::anyhow!("读取配置失败: {:?}", e))?
@@ -45,5 +45,13 @@ async fn main() -> Result<(), anyhow::Error> {
             log::error!("{:?}", e.to_string());
         }
     }
+    Ok(())
+}
+
+async fn query_db() -> Result<(), sqlx::Error>{
+    // let db_url = env::var("DATABASE_URL")
+    //     .unwrap_or_else(|_| "sqlite:demo.db".into());
+    //
+    // let pool = SqlitePool::connect(&db_url).await?;
     Ok(())
 }
