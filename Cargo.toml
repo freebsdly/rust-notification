@@ -37,7 +37,7 @@ axum = { version = "0", features = ["tracing", "macros"] }
 axum-extra = { version = "0", features = ["typed-header", "query"] }
 axum-prometheus = { version = "0" }
 utoipa = { version = "5", features = ["axum_extras"] }
-utoipa-swagger-ui = "9"
+utoipa-swagger-ui = { version = "9", features = ["axum"] }
 
 # db
 sqlx = { version = "0", features = ["macros", "runtime-tokio", "json", "sqlite", "derive", "uuid", "ipnetwork", "chrono"] }

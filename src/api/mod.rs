@@ -20,6 +20,7 @@ use tower::ServiceBuilder;
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
 
 #[derive(Clone)]
 pub struct ApiState {}
@@ -46,7 +47,9 @@ impl ApiService {
     }
 
     fn routes() -> Router<Arc<ApiState>> {
-        Router::new().route("/", get(interface::index))
+        Router::new()
+            .route("/", get(interface::index))
+            .route("/users", get(interface::get_users))
     }
 
     pub fn start(&self) -> Result<(), anyhow::Error> {
@@ -70,6 +73,7 @@ impl ApiService {
         state: Arc<ApiState>,
     ) -> Result<(), anyhow::Error> {
         let (prometheus_layer, metric_handle) = Self::build_metrics();
+        let api = ApiDoc::openapi();
         // Create a regular axum app.
         let app = Router::<Arc<ApiState>>::new()
             .nest("/api", Self::routes())
@@ -86,7 +90,8 @@ impl ApiService {
                     .layer(HandleErrorLayer::new(interface::handle_error))
                     .timeout(Duration::from_secs(args.timeout)),
             )
-            .with_state(state);
+            .with_state(state)
+            .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", api));
 
         let tcp_listener = TcpListener::from_std(listener)?;
         // Run the server with graceful shutdown
@@ -108,8 +113,6 @@ impl ApiService {
     ) {
         PrometheusMetricLayerBuilder::new()
             .with_ignore_patterns(&["/metrics"])
-            // .with_group_patterns_as("/foo", &["/foo/:bar", "/foo/:bar/:baz"])
-            // .with_group_patterns_as("/bar", &["/auth/*path"])
             .with_default_metrics()
             .build_pair()
     }
