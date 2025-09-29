@@ -1,4 +1,4 @@
-use crate::conf::DevOpsOptions;
+use crate::conf::DevOpsArgs;
 use anyhow::{anyhow, Context};
 use getset::Getters;
 use serde::Deserialize;
@@ -127,11 +127,11 @@ impl Default for PipelineInfo {
 #[allow(unused)]
 pub struct DevOpsApiClient {
     client: reqwest::Client,
-    options: DevOpsOptions,
+    options: DevOpsArgs,
 }
 
 impl DevOpsApiClient {
-    pub(crate) fn new(options: DevOpsOptions) -> Self {
+    pub(crate) fn new(options: DevOpsArgs) -> Self {
         DevOpsApiClient {
             client: reqwest::Client::new(),
             options,

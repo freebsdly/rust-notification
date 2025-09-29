@@ -2,3 +2,10 @@
 base_url = "https://bizdevops.trinasolar.com/api/open"
 access_token = "815dda263126477db4d0f609c3906df0"
 user_id = "itoutsource.cz1731"
+[database]
+url="sqlite:demo.db?mode=rwc"
+pool_size=10
+[api]
+address="0.0.0.0"
+port=8080
+timeout=5

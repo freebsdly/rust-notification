@@ -1,3 +1,4 @@
+use crate::api::ApiServiceArgs;
 use config::{Config, ConfigError, Environment, File};
 use getset::Getters;
 use serde::Deserialize;
@@ -5,7 +6,7 @@ use serde::Deserialize;
 #[allow(unused)]
 #[derive(Debug, Deserialize, Clone, Getters)]
 #[get = "pub"]
-pub struct DevOpsOptions {
+pub struct DevOpsArgs {
     #[serde(default)]
     base_url: String,
     #[serde(default)]
@@ -19,17 +20,15 @@ pub struct DevOpsOptions {
 #[get = "pub"]
 pub struct DataBaseOptions {
     url: String,
-    pool_size: u32,
-    username: Option<String>,
-    password: Option<String>,
 }
 
 #[allow(unused)]
 #[derive(Debug, Deserialize, Clone, Getters)]
 #[get = "pub"]
 pub struct Settings {
-    devops: DevOpsOptions,
+    devops: DevOpsArgs,
     database: DataBaseOptions,
+    api: ApiServiceArgs,
 }
 
 impl Settings {
